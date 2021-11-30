@@ -1,0 +1,37 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build i686",
+            "type": "shell",
+            "command": "make clean && make",
+            "group": "build",
+            "options": {
+                "env": {
+                    "CFLAGS": "-m32",
+                    "LDFLAGS": "-m32",
+                }
+            }
+        },
+        {
+            "label": "Build Windows",
+            "type": "shell",
+            "command": "make clean && make",
+            "group": "build",
+            "options": {
+                "env": {
+                    "CC": "i686-w64-mingw32-gcc",
+                    "UNAME": "Windows_NT",
+                }
+            }
+        },
+        {
+            "label": "Build x86_64",
+            "type": "shell",
+            "command": "make clean && make",
+            "group": "build",
+        },
+    ]
+}

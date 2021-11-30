@@ -7,11 +7,14 @@
 HIDAPI_DIR ?= ../hidapi
 
 # try to do some autodetecting
-UNAME := $(shell uname -s)
-ARCH := $(shell uname -m)
+UNAME ?= $(shell uname -s)
+ARCH ?= $(shell uname -m)
 
 ifeq "$(UNAME)" "Darwin"
 	OS=macos
+endif
+ifeq "$(UNAME)" "Windows_NT"
+	OS=windows
 endif
 ifeq "$(OS)" "Windows_NT"
 	OS=windows
