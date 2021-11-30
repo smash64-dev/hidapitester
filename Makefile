@@ -5,6 +5,7 @@
 
 # overide this with something like `HIDAPI_DIR=../hidapi-libusb make`
 HIDAPI_DIR ?= ../hidapi
+LIB_DIR ?= .libs
 
 # try to do some autodetecting
 UNAME ?= $(shell uname -s)
@@ -34,6 +35,7 @@ ifeq "$(OS)" "macos"
 
 CFLAGS+=-arch x86_64 -arch arm64
 LIBS=-framework IOKit -framework CoreFoundation -framework AppKit
+DYNLIBS = -L$(HIDAPI_DIR)/mac/$(LIB_DIR) -lhidapi
 OBJS=$(HIDAPI_DIR)/mac/hid.o
 EXE=
 
@@ -43,6 +45,7 @@ endif
 ifeq "$(OS)" "windows"
 
 LIBS += -lsetupapi -Wl,--enable-auto-import -static-libgcc -static-libstdc++
+DYNLIBS = -L$(HIDAPI_DIR)/windows/$(LIB_DIR) -lhidapi
 OBJS = $(HIDAPI_DIR)/windows/hid.o
 EXE=.exe
 
@@ -52,11 +55,19 @@ endif
 ifeq "$(OS)" "linux"
 
 LIBS = `pkg-config libudev --libs`
+DYNLIBS = -L$(HIDAPI_DIR)/linux/$(LIB_DIR) -lhidapi-hidraw
 OBJS = $(HIDAPI_DIR)/linux/hid.o
 EXE=
 
 endif
 
+############ Dynamic (hidraw)
+ifeq "$(LINK)" "dynamic"
+
+LIBS += $(DYNLIBS)
+OBJS =
+
+endif
 
 ############# common
 

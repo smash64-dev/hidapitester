@@ -12,6 +12,7 @@
                 "env": {
                     "CFLAGS": "-m32",
                     "LDFLAGS": "-m32",
+                    "LINK": "dynamic",
                 }
             }
         },
@@ -24,6 +25,7 @@
                 "env": {
                     "CC": "i686-w64-mingw32-gcc",
                     "UNAME": "Windows_NT",
+                    "LINK": "dynamic",
                 }
             }
         },
@@ -32,6 +34,11 @@
             "type": "shell",
             "command": "make clean && make",
             "group": "build",
+            "options": {
+                "env": {
+                    "LINK": "dynamic",
+                }
+            }
         },
     ]
 }
